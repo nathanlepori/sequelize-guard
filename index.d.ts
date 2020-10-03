@@ -2,6 +2,7 @@ import * as sequelize from 'sequelize/types/lib/sequelize';
 import { Model, ModelType, Sequelize } from 'sequelize';
 import EventEmitter = NodeJS.EventEmitter;
 import NodeCache from 'node-cache';
+import { SyncOptions } from 'sequelize/types/lib/sequelize';
 
 declare module 'sequelize/types/lib/sequelize' {
   interface Sequelize {
@@ -100,6 +101,7 @@ interface GuardModels {
 declare class SequelizeGuard<TModel extends ModelType = ModelType> {
   constructor(seql: Sequelize, options: SequelizeGuardOptions<TModel>);
 
+  sync(options?: SyncOptions): Promise<this>;
   models(): GuardModels;
   init(): GuardControl;
   allow(role: string, actions: Action[] | Action, resources: string[] | string): Promise<{
