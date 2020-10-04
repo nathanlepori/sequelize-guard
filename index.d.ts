@@ -87,12 +87,12 @@ declare class RoleUser extends Model<RoleUser> {
 }
 
 interface GuardModels<TModel extends ModelType = typeof _GuardUser> {
-  GuardResource: GuardResource,
-  GuardRole: GuardRole,
-  GuardPermission: GuardPermission,
-  RolePermission: RolePermission,
-  GuardUser: TModel,
-  RoleUser: RoleUser
+  GuardResource: typeof GuardResource;
+  GuardRole: typeof GuardRole;
+  GuardPermission: typeof GuardPermission;
+  RolePermission: typeof RolePermission;
+  GuardUser: TModel;
+  RoleUser: typeof RoleUser;
 }
 
 declare class SequelizeGuard<TModel extends ModelType = typeof _GuardUser> {
