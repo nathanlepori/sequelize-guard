@@ -7,9 +7,6 @@ import { SyncOptions } from 'sequelize/types/lib/sequelize';
 declare module 'sequelize/types/lib/sequelize' {
   interface Sequelize {
     guard: SequelizeGuard;
-    models: {
-      GuardModels
-    }
   }
 }
 
@@ -89,20 +86,20 @@ declare class RoleUser extends Model<RoleUser> {
   user_id: any;
 }
 
-interface GuardModels {
-  GuardResource,
-  GuardRole,
-  GuardPermission,
-  RolePermission,
-  GuardUser,
-  RoleUser
+interface GuardModels<TModel extends ModelType = typeof _GuardUser> {
+  GuardResource: GuardResource,
+  GuardRole: GuardRole,
+  GuardPermission: GuardPermission,
+  RolePermission: RolePermission,
+  GuardUser: TModel,
+  RoleUser: RoleUser
 }
 
-declare class SequelizeGuard<TModel extends ModelType = ModelType> {
+declare class SequelizeGuard<TModel extends ModelType = typeof _GuardUser> {
   constructor(seql: Sequelize, options: SequelizeGuardOptions<TModel>);
 
   sync(options?: SyncOptions): Promise<this>;
-  models(): GuardModels;
+  models(): GuardModels<TModel>;
   init(): GuardControl;
   allow(role: string, actions: Action[] | Action, resources: string[] | string): Promise<{
     role: GuardRole,
