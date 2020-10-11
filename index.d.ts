@@ -96,7 +96,7 @@ interface GuardModels<TModel extends ModelType = typeof _GuardUser> {
 }
 
 declare class SequelizeGuard<TModel extends ModelType = typeof _GuardUser> {
-  constructor(seql: Sequelize, options: SequelizeGuardOptions<TModel>);
+  constructor(seql: Sequelize, options: SequelizeGuardOptions<TModel>): Promise<this>;
 
   sync(options?: SyncOptions): Promise<this>;
   models(): GuardModels<TModel>;
