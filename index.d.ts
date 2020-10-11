@@ -96,8 +96,6 @@ interface GuardModels<TModel extends ModelType = typeof _GuardUser> {
 }
 
 declare class SequelizeGuard<TModel extends ModelType = typeof _GuardUser> {
-  constructor(seql: Sequelize, options: SequelizeGuardOptions<TModel>): Promise<this>;
-
   sync(options?: SyncOptions): Promise<this>;
   models(): GuardModels<TModel>;
   init(): GuardControl;
@@ -173,6 +171,10 @@ declare class SequelizeGuard<TModel extends ModelType = typeof _GuardUser> {
   userHasAllRoles(user: T, roles: string): Promise<boolean>;
 }
 
+declare class SequelizeGuardCtor<TModel extends ModelType = typeof _GuardUser> extends Promise<SequelizeGuard<TModel>> {
+  constructor(seql: Sequelize, options: SequelizeGuardOptions<TModel>): Promise<SequelizeGuard<TModel>>;
+}
+
 declare class GuardControl {
   constructor(guard: SequelizeGuard);
 
@@ -185,7 +187,7 @@ declare class GuardControl {
   }>;
 }
 
-export default SequelizeGuard;
+export default SequelizeGuardCtor;
 
 export type {
   SequelizeGuardOptions,
