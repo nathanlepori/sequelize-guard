@@ -172,7 +172,7 @@ declare class SequelizeGuard<TModel extends ModelType = typeof _GuardUser> {
 }
 
 declare class SequelizeGuardCtor<TModel extends ModelType = typeof _GuardUser> extends Promise<SequelizeGuard<TModel>> {
-  constructor(seql: Sequelize, options: SequelizeGuardOptions<TModel>): Promise<SequelizeGuard<TModel>>;
+  constructor(seql: Sequelize, options: SequelizeGuardOptions<TModel>);
 }
 
 declare class GuardControl {
