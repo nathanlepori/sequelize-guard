@@ -167,8 +167,8 @@ declare class SequelizeGuard<TModel extends ModelType = typeof _GuardUser> {
   resetUserCache(): NodeCache;
   getUserCache(): NodeCache;
 
-  userHasRoles(user: T, roles: string): Promise<boolean>;
-  userHasAllRoles(user: T, roles: string): Promise<boolean>;
+  userHasRoles(user: TModel, roles: string): Promise<boolean>;
+  userHasAllRoles(user: TModel, roles: string): Promise<boolean>;
 }
 
 declare class SequelizeGuardCtor<TModel extends ModelType = typeof _GuardUser> extends Promise<SequelizeGuard<TModel>> {
