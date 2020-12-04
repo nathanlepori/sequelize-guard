@@ -1,5 +1,5 @@
 import * as sequelize from 'sequelize/types/lib/sequelize';
-import { Model, ModelType, Sequelize } from 'sequelize';
+import { Model, ModelType, QueryInterface, Sequelize } from "sequelize";
 import EventEmitter = NodeJS.EventEmitter;
 import NodeCache from 'node-cache';
 import { SyncOptions } from 'sequelize/types/lib/sequelize';
@@ -96,6 +96,14 @@ interface GuardModels<TModel extends ModelType = typeof _GuardUser> {
 }
 
 declare class SequelizeGuard<TModel extends ModelType = typeof _GuardUser> {
+  static migration: {
+    up(queryInterface: QueryInterface, Sequelize: Sequelize, opts: SequelizeGuardOptions<TModel>);
+    down(queryInterface: QueryInterface, Sequelize: Sequelize, opts: SequelizeGuardOptions<TModel>);
+  };
+  static seeder: {
+    up(queryInterface: QueryInterface, Sequelize: Sequelize, opts: SequelizeGuardOptions<TModel>);
+    down(queryInterface: QueryInterface, Sequelize: Sequelize, opts: SequelizeGuardOptions<TModel>);
+  };
   sync(options?: SyncOptions): Promise<this>;
   models(): GuardModels<TModel>;
   init(): GuardControl;
