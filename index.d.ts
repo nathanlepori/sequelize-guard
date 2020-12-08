@@ -97,12 +97,12 @@ interface GuardModels<TModel extends ModelType = typeof _GuardUser> {
 declare class SequelizeGuard<TModel extends ModelType = typeof _GuardUser> {
   constructor(seql: Sequelize, options: SequelizeGuardOptions<TModel>);
   static migration: {
-    up(queryInterface: QueryInterface, Sequelize: Sequelize, opts?: SequelizeGuardOptions<TModel>): Promise<void>;
-    down(queryInterface: QueryInterface, Sequelize: Sequelize, opts?: SequelizeGuardOptions<TModel>): Promise<void>;
+    up<TModel extends ModelType = typeof _GuardUser>(queryInterface: QueryInterface, Sequelize: Sequelize, opts?: SequelizeGuardOptions<TModel>): Promise<void>;
+    down<TModel extends ModelType = typeof _GuardUser>(queryInterface: QueryInterface, Sequelize: Sequelize, opts?: SequelizeGuardOptions<TModel>): Promise<void>;
   };
   static seeder: {
-    up(queryInterface: QueryInterface, Sequelize: Sequelize, opts?: SequelizeGuardOptions<TModel>): Promise<Object>;
-    down(queryInterface: QueryInterface, Sequelize: Sequelize, opts?: SequelizeGuardOptions<TModel>): Promise<Object>;
+    up<TModel extends ModelType = typeof _GuardUser>(queryInterface: QueryInterface, Sequelize: Sequelize, opts?: SequelizeGuardOptions<TModel>): Promise<Object>;
+    down<TModel extends ModelType = typeof _GuardUser>(queryInterface: QueryInterface, Sequelize: Sequelize, opts?: SequelizeGuardOptions<TModel>): Promise<Object>;
   };
   sync(options?: SyncOptions): Promise<this>;
   models(): GuardModels<TModel>;
