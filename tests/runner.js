@@ -24,7 +24,9 @@ describe('Sequelize Guard - SQLite', function () {
       .then(function () {
         return seq.drop().then(function () {
           self.guard = new SequelizeGuard(seq, {});
-          done();
+          self.guard
+            .sync()
+            .then(() => done());
         });
       })
       .catch(done);

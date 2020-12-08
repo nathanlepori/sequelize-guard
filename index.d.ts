@@ -17,7 +17,6 @@ interface SequelizeGuardOptions<TModel extends ModelType = typeof _GuardUser> {
   primaryKey?: string;
   timestamps?: boolean;
   paranoid?: boolean;
-  sync?: boolean;
   debug?: boolean;
   UserModel?: TModel;
   userPk?: string;
@@ -96,6 +95,15 @@ interface GuardModels<TModel extends ModelType = typeof _GuardUser> {
 }
 
 declare class SequelizeGuard<TModel extends ModelType = typeof _GuardUser> {
+  constructor(seql: Sequelize, options: SequelizeGuardOptions<TModel>);
+  static migration: {
+    up(queryInterface: QueryInterface, Sequelize: Sequelize, opts?: SequelizeGuardOptions<TModel>): Promise<void>;
+    down(queryInterface: QueryInterface, Sequelize: Sequelize, opts?: SequelizeGuardOptions<TModel>): Promise<void>;
+  };
+  static seeder: {
+    up(queryInterface: QueryInterface, Sequelize: Sequelize, opts?: SequelizeGuardOptions<TModel>): Promise<Object>;
+    down(queryInterface: QueryInterface, Sequelize: Sequelize, opts?: SequelizeGuardOptions<TModel>): Promise<Object>;
+  };
   sync(options?: SyncOptions): Promise<this>;
   models(): GuardModels<TModel>;
   init(): GuardControl;
@@ -171,18 +179,6 @@ declare class SequelizeGuard<TModel extends ModelType = typeof _GuardUser> {
   userHasAllRoles(user: TModel, roles: string): Promise<boolean>;
 }
 
-declare class SequelizeGuardCtor<TModel extends ModelType = typeof _GuardUser> extends Promise<SequelizeGuard<TModel>> {
-  static migration: {
-    up(queryInterface: QueryInterface, Sequelize: Sequelize, opts?: SequelizeGuardOptions<TModel>): Promise<void>;
-    down(queryInterface: QueryInterface, Sequelize: Sequelize, opts?: SequelizeGuardOptions<TModel>): Promise<void>;
-  };
-  static seeder: {
-    up(queryInterface: QueryInterface, Sequelize: Sequelize, opts?: SequelizeGuardOptions<TModel>): Promise<Object>;
-    down(queryInterface: QueryInterface, Sequelize: Sequelize, opts?: SequelizeGuardOptions<TModel>): Promise<Object>;
-  };
-  constructor(seql: Sequelize, options: SequelizeGuardOptions<TModel>);
-}
-
 declare class GuardControl {
   constructor(guard: SequelizeGuard);
 
@@ -195,7 +191,7 @@ declare class GuardControl {
   }>;
 }
 
-export default SequelizeGuardCtor;
+export default SequelizeGuard;
 
 export type {
   SequelizeGuardOptions,

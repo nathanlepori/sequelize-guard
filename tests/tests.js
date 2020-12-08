@@ -15,7 +15,6 @@ exports.init = function () {
         tableName: `guard_users`,
       });
       let seqGuard = new SequelizeGuard(this.seqMem1, {
-        sync: false,
         debug: false,
         timestamps: true,
         paranoid: true,
@@ -30,16 +29,16 @@ exports.init = function () {
 
     it('should be initialized with options 2', function (done) {
       let seqGuard = new SequelizeGuard(this.seqMem2, {
-        sync: true,
         debug: true,
         timestamps: true,
         paranoid: false,
       });
-
-      if (seqGuard) {
-        this.__proto__.seqMem2 = null;
-        done();
-      }
+      seqGuard
+        .sync()
+        .then(() => {
+          this.__proto__.seqMem2 = null;
+          done();
+        });
     });
   });
 };
@@ -1036,15 +1035,17 @@ exports.customConfig = function () {
   describe('SequelizeGuard init custom config', function () {
     before(function (done) {
       let seqGuard2 = new SequelizeGuard(this.seqMem3, {
-        sync: true,
         debug: false,
         timestamps: true,
         paranoid: false,
         userCache: false,
       });
-
-      this.guard2 = seqGuard2;
-      done();
+      seqGuard2
+        .sync()
+        .then(() => {
+          this.guard2 = seqGuard2;
+          done();
+        });
     });
 
     it('should work without user cache', function (done) {
