@@ -1,5 +1,5 @@
-import * as sequelize from 'sequelize/types/lib/sequelize';
-import { Model, ModelType, QueryInterface, Sequelize } from 'sequelize';
+import * as _Sequelize from 'sequelize';
+import { DataType, Model, ModelType, QueryInterface, Sequelize } from 'sequelize';
 import EventEmitter = NodeJS.EventEmitter;
 import NodeCache from 'node-cache';
 import { SyncOptions } from 'sequelize/types/lib/sequelize';
@@ -20,6 +20,7 @@ interface SequelizeGuardOptions<TModel extends ModelType = typeof _GuardUser> {
   debug?: boolean;
   UserModel?: TModel;
   userPk?: string;
+  userPkType?: DataType;
   safeGuardDeletes?: boolean;
   userCache?: boolean;
   userCacheTtl?: number;
@@ -35,7 +36,7 @@ interface GuardUser {
   isAnyOf(roles: string[]): Promise<boolean>;
   isA(role: string): Promise<boolean>;
   isAn(role: string): Promise<boolean>;
-  roles(): Promise<GuardRole>;
+  roles(): Promise<GuardRole[]>;
 }
 
 /* ---------- Models ---------- */
@@ -97,12 +98,12 @@ interface GuardModels<TModel extends ModelType = typeof _GuardUser> {
 declare class SequelizeGuard<TModel extends ModelType = typeof _GuardUser> {
   constructor(seql: Sequelize, options: SequelizeGuardOptions<TModel>);
   static migration: {
-    up<TModel extends ModelType = typeof _GuardUser>(queryInterface: QueryInterface, Sequelize: Sequelize, opts?: SequelizeGuardOptions<TModel>): Promise<void>;
-    down<TModel extends ModelType = typeof _GuardUser>(queryInterface: QueryInterface, Sequelize: Sequelize, opts?: SequelizeGuardOptions<TModel>): Promise<void>;
+    up<TModel extends ModelType = typeof _GuardUser>(queryInterface: QueryInterface, Sequelize: typeof _Sequelize, opts?: SequelizeGuardOptions<TModel>): Promise<void>;
+    down<TModel extends ModelType = typeof _GuardUser>(queryInterface: QueryInterface, Sequelize: typeof _Sequelize, opts?: SequelizeGuardOptions<TModel>): Promise<void>;
   };
   static seeder: {
-    up<TModel extends ModelType = typeof _GuardUser>(queryInterface: QueryInterface, Sequelize: Sequelize, opts?: SequelizeGuardOptions<TModel>): Promise<Object>;
-    down<TModel extends ModelType = typeof _GuardUser>(queryInterface: QueryInterface, Sequelize: Sequelize, opts?: SequelizeGuardOptions<TModel>): Promise<Object>;
+    up<TModel extends ModelType = typeof _GuardUser>(queryInterface: QueryInterface, Sequelize: typeof _Sequelize, opts?: SequelizeGuardOptions<TModel>): Promise<Object>;
+    down<TModel extends ModelType = typeof _GuardUser>(queryInterface: QueryInterface, Sequelize: typeof _Sequelize, opts?: SequelizeGuardOptions<TModel>): Promise<Object>;
   };
   sync(options?: SyncOptions): Promise<this>;
   models(): GuardModels<TModel>;
@@ -195,5 +196,7 @@ export default SequelizeGuard;
 
 export type {
   SequelizeGuardOptions,
+  GuardPermission,
+  GuardRole,
   GuardUser
 }
