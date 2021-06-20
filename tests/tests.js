@@ -68,7 +68,7 @@ exports.Constructor = function () {
       // ['guard_actions', 'guard_resources', 'guard_permissions', 'guard_roles', 'guard_role_user', 'guard_role_permission'  ];
       let expected = SequelizeGuard.migration.tables.map((t) => 'guard_' + t);
 
-      SequelizeGuard.migration.up(queryInterfaceStub, this.guard.sequelize);
+      SequelizeGuard.migration.up(queryInterfaceStub, this.guard._sequelize);
 
       assert.deepEqual(migration, expected);
     });
@@ -78,7 +78,7 @@ exports.Constructor = function () {
       // ['guard_actions', 'guard_resources', 'guard_permissions', 'guard_roles', 'guard_role_user', 'guard_role_permission'  ];
       let expected = SequelizeGuard.migration.tables.map((t) => 'guard_' + t);
 
-      SequelizeGuard.migration.up(queryInterfaceStub, this.guard.sequelize, {
+      SequelizeGuard.migration.up(queryInterfaceStub, this.guard._sequelize, {
         prefix: 'guard_',
         timestamps: true,
         paranoid: true,
@@ -92,7 +92,7 @@ exports.Constructor = function () {
       // ['guard_actions', 'guard_resources', 'guard_permissions', 'guard_roles', 'guard_role_user', 'guard_role_permission'  ];
       let expected = SequelizeGuard.migration.tables.map((t) => 'guard_' + t);
 
-      SequelizeGuard.migration.down(queryInterfaceStub, this.guard.sequelize);
+      SequelizeGuard.migration.down(queryInterfaceStub, this.guard._sequelize);
       assert.deepEqual(migration, expected);
     });
     it('properly runs down migrations with options', function () {
@@ -100,7 +100,7 @@ exports.Constructor = function () {
       // ['guard_actions', 'guard_resources', 'guard_permissions', 'guard_roles', 'guard_role_user', 'guard_role_permission'  ];
       let expected = SequelizeGuard.migration.tables.map((t) => 'guard_' + t);
 
-      SequelizeGuard.migration.down(queryInterfaceStub, this.guard.sequelize, {
+      SequelizeGuard.migration.down(queryInterfaceStub, this.guard._sequelize, {
         prefix: 'guard_',
       });
       assert.deepEqual(migration, expected);
@@ -111,7 +111,7 @@ exports.Constructor = function () {
       let expected = ['guard_roles', 'guard_permissions'];
 
       return SequelizeGuard.seeder
-        .up(queryInterfaceStub, this.guard.sequelize)
+        .up(queryInterfaceStub, this.guard._sequelize)
         .then(() => {
           assert.deepEqual(seeds, expected);
         });
@@ -121,7 +121,7 @@ exports.Constructor = function () {
       let expected = ['guard_roles', 'guard_permissions'];
 
       return SequelizeGuard.seeder
-        .up(queryInterfaceStub, this.guard.sequelize, { timestamps: true })
+        .up(queryInterfaceStub, this.guard._sequelize, { timestamps: true })
         .then(() => {
           assert.deepEqual(seeds, expected);
         });
@@ -132,7 +132,7 @@ exports.Constructor = function () {
       let expected = ['guard_roles', 'guard_permissions'];
 
       return SequelizeGuard.seeder
-        .down(queryInterfaceStub, this.guard.sequelize)
+        .down(queryInterfaceStub, this.guard._sequelize)
         .then(() => {
           assert.deepEqual(seeds, expected);
         });
