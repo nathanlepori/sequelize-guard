@@ -36,7 +36,7 @@ interface GuardUser {
   isAnyOf(roles: string[]): Promise<boolean>;
   isA(role: string): Promise<boolean>;
   isAn(role: string): Promise<boolean>;
-  roles(): Promise<GuardRole[]>;
+  roles(options?: {json?: false}): Promise<GuardRole[]>;
 }
 
 /* ---------- Models ---------- */
@@ -169,7 +169,7 @@ declare class SequelizeGuard<TModel extends ModelType = typeof _GuardUser> {
   onPermsAddedToRole(cb: (...args: any[]) => void): () => EventEmitter;
   onPermsRemovedFromRole(cb: (...args: any[]) => void): () => EventEmitter;
   makeUser(user: Partial<TModel>): Promise<TModel>;
-  getUserRoles(user: TModel): Promise<GuardRole>;
+  getUserRoles(user: TModel, options?: {json?: false}): Promise<GuardRole>;
 
   resetCache(): NodeCache;
   getCache(): Promise<NodeCache>;
