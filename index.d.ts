@@ -36,7 +36,7 @@ interface GuardUser {
   isAnyOf(roles: string[]): Promise<boolean>;
   isA(role: string): Promise<boolean>;
   isAn(role: string): Promise<boolean>;
-  roles(options?: {json?: false}): Promise<GuardRole[]>;
+  roles(options?: {json?: boolean}): Promise<GuardRole[]>;
 }
 
 /* ---------- Models ---------- */
@@ -116,12 +116,12 @@ declare class SequelizeGuard<TModel extends ModelType = typeof _GuardUser> {
   createPerms(resources: string | string[], actions: Action | Action[], options?: {
     names?: string[],
     all?: boolean,
-    json?: false
+    json?: boolean
   }): Promise<GuardPermission[]>;
   createPerms(resources: string | string[], actions: Action | Action[], options?: {
     names?: string[],
     all?: boolean,
-    json?: true
+    json?: boolean
   }): Promise<string[]>;
   createPerms(resources: string | string[], actions: Action | Action[], options?: {
     names?: string[],
@@ -130,11 +130,11 @@ declare class SequelizeGuard<TModel extends ModelType = typeof _GuardUser> {
   }): Promise<GuardPermission[]> | Promise<string[]>;
   createPermsBulk(permissions: GuardPermission[], options: {
     all?: boolean,
-    json?: false
+    json?: boolean
   }): Promise<GuardPermission[]>;
   createPermsBulk(permissions: GuardPermission[], options: {
     all?: boolean,
-    json?: true
+    json?: boolean
   }): Promise<string[]>;
   createPermsBulk(permissions: GuardPermission[], options: {
     all?: boolean,
@@ -169,7 +169,7 @@ declare class SequelizeGuard<TModel extends ModelType = typeof _GuardUser> {
   onPermsAddedToRole(cb: (...args: any[]) => void): () => EventEmitter;
   onPermsRemovedFromRole(cb: (...args: any[]) => void): () => EventEmitter;
   makeUser(user: Partial<TModel>): Promise<TModel>;
-  getUserRoles(user: TModel, options?: {json?: false}): Promise<GuardRole>;
+  getUserRoles(user: TModel, options?: {json?: boolean}): Promise<GuardRole>;
 
   resetCache(): NodeCache;
   getCache(): Promise<NodeCache>;
